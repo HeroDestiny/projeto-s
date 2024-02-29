@@ -9,15 +9,11 @@ int main()
 
     if (a > b)
     {
-        printf("%d\n", &a);
-
-        printf("%d\n", &b);
+        printf("%d\n%d\n", a, b);
     }
     else
     {
-        printf("%d\n", &a);
-
-        printf("%d\n", &b);
+        printf("%d\n%d\n", b, a);
     }
     return 0;
 }
