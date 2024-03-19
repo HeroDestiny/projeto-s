@@ -1,44 +1,44 @@
 #include <stdio.h>
 
 int main() {
-    int N;
-    printf("Digite o valor de N para as matrizes: ");
-    scanf("%d", &N);
+    int L, C, M;
+    printf("Digite o valor de Linhas e Colunas para a primeira matriz e o número de Colunas para a segunda matriz: ");
+    scanf("%d %d %d", &L, &C, &M);
 
-    int mat1[N][N], mat2[N][N], resultado[N][N];
+    int mat1[L][C], mat2[C][M], resultado[L][M];
 
     // Inicializa a matriz resultado com zeros
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
+    for (int i = 0; i < L; i++) {
+        for (int j = 0; j < M; j++) {
             resultado[i][j] = 0;
         }
     }
 
-   //preenche de 1 até N
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            mat1[i][j] = 1 + i*N + j;  
+    // Preenche as matrizes
+    for (int i = 0; i < L; i++) {
+        for (int j = 0; j < C; j++) {
+            mat1[i][j] = 1 + i*C + j; // Preenche mat1
         }
     }
 
-   //preenche de 1 até N
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            mat2[i][j] = 1 + i*N + j;  
+    for (int i = 0; i < C; i++) {
+        for (int j = 0; j < M; j++) {
+            mat2[i][j] = 1 + i*M + j; // Preenche mat2
         }
     }
 
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            for (int k = 0; k < N; k++) {
+    // Realiza a multiplicação das matrizes
+    for (int i = 0; i < L; i++) {
+        for (int j = 0; j < M; j++) {
+            for (int k = 0; k < C; k++) {
                 resultado[i][j] += mat1[i][k] * mat2[k][j];
             }
         }
     }
 
     printf("\nO resultado da multiplicação das matrizes é:\n");
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
+    for (int i = 0; i < L; i++) {
+        for (int j = 0; j < M; j++) {
             printf("%d ", resultado[i][j]);
         }
         printf("\n");
