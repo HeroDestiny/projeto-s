@@ -35,11 +35,11 @@ void verificar_ponteiro(void *p, char *teste)
 
 int main()
 {
-    /*  TESTE 1 */
+
     indice *idc = criar_indice();
     verificar_int(0, tamanho(idc), "teste 1");
 
-    /* TESTE 2 */
+
     unsigned int pgs_criptografia[] = {10};
     inserir_entrada(idc, "criptografia", pgs_criptografia, 1);
     unsigned int pgs_analise[] = {12, 27};
@@ -48,13 +48,13 @@ int main()
     inserir_entrada(idc, "complexidade", pgs_complexidade, 3);
     verificar_int(3, tamanho(idc), "teste 2");
 
-    /* TESTE 3 */
+
     entrada *e = localizar(idc, "complexidade");
     verificar_ponteiro(e, "teste 3");
     verificar_str("complexidade", e->termo, "teste 3");
     verificar_arranjo(3, pgs_complexidade, e->paginas, "teste 3");
 
-    /* TESTE 4 */
+
     unsigned int pgs_complexidade_2[] = {2, 3, 5, 6};
     atualizar_entrada(idc, "complexidade", pgs_complexidade_2, 4);
     e = localizar(idc, "complexidade");
@@ -63,7 +63,7 @@ int main()
     verificar_arranjo(4, pgs_complexidade_2, e->paginas, "teste 4");
     verificar_arranjo(3, pgs_complexidade, e->paginas, "teste 4");
 
-    /* TESTE 5 */
+
     unsigned int pgs_argumento[] = {11, 12};
     inserir_entrada(idc, "argumento", pgs_argumento, 2);
     unsigned int pgs_classe[] = {8, 9, 7, 20, 21, 22};
@@ -72,14 +72,13 @@ int main()
     inserir_entrada(idc, "função", pgs_funcao, 1);
     verificar_int(6, tamanho(idc), "teste 5");
 
-    /* TESTE 6 */
     e = localizar(idc, "função");
     verificar_ponteiro(e, "teste 6");
     verificar_str("função", e->termo, "teste 6");
     verificar_arranjo(4, pgs_funcao, e->paginas, "teste 6");
     verificar_arranjo(3, pgs_funcao, e->paginas, "teste 6");
 
-    /* Teste de impressão */
+
     imprimir(idc);
 
     return 0;
