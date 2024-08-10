@@ -1,3 +1,5 @@
+gcc -Wall -o ola_mundo ola_mundo.c
+
 exercicio - 02:
 #include <stdio.h>
 
