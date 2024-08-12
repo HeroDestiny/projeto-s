@@ -1,145 +1,134 @@
-// fazer um menu com 0-sair, 1-listar, 2-inserir no inicio, 3-inserir no fim, 4-remover do inicio, 5-remover do fim, 6-buscar elemento
-
 #include <stdio.h>
 #include <stdlib.h>
 
-struct listaLigada
-{
-    int numero;
-    struct listaLigada *proximo;
-};
+typedef struct No {
+    int dado;
+    struct No* proximo;
+} No;
 
-int listar(struct listaLigada **lista)
-{
-    struct listaLigada *aux = *lista;
-    while (aux != NULL)
-    {
-        printf("%p\n", aux);
-        aux = aux->proximo;
-    }
+No* criarNo(int dado) {
+    No* novoNo = (No*)malloc(sizeof(No));
+    novoNo->dado = dado;
+    novoNo->proximo = NULL;
+    return novoNo;
 }
 
-int inserirInicio(struct listaLigada **lista)
-{
-    struct listaLigada *novo = malloc(sizeof(struct listaLigada));
-    novo->proximo = *lista;
-    *lista = novo;
+void listarElementos(No* cabeca) {
+    No* temp = cabeca;
+    while (temp != NULL) {
+        printf("Elemento: %d \n", temp->dado);
+        temp = temp->proximo;
+    }
+    printf("--Fim da Lista--\n");
 }
 
-int removerInicio(struct listaLigada **lista)
-{
-    if (*lista != NULL)
-    {
-        struct listaLigada *aux = *lista;
-        *lista = (*lista)->proximo;
-        free(aux);
-    }
+void inserirNoInicio(No** cabeca, int dado) {
+    No* novoNo = criarNo(dado);
+    novoNo->proximo = *cabeca;
+    *cabeca = novoNo;
 }
 
-int inserirFim(struct listaLigada **lista)
-{
-    struct listaLigada *novo = malloc(sizeof(struct listaLigada));
-    novo->proximo = NULL;
-
-    if (*lista == NULL)
-    {
-        *lista = novo;
+void inserirNoFim(No** cabeca, int dado) {
+    No* novoNo = criarNo(dado);
+    if (*cabeca == NULL) {
+        *cabeca = novoNo;
+        return;
     }
-    else
-    {
-        struct listaLigada *aux = *lista;
-        while (aux->proximo != NULL)
-        {
-            aux = aux->proximo;
+    No* temp = *cabeca;
+    while (temp->proximo != NULL) {
+        temp = temp->proximo;
+    }
+    temp->proximo = novoNo;
+}
+
+void removerDoInicio(No** cabeca) {
+    if (*cabeca == NULL) {
+        printf("A lista está vazia.\n");
+        return;
+    }
+    No* temp = *cabeca;
+    *cabeca = (*cabeca)->proximo;
+    free(temp);
+}
+
+void removerDoFim(No** cabeca) {
+    if (*cabeca == NULL) {
+        printf("A lista está vazia.\n");
+        return;
+    }
+    if ((*cabeca)->proximo == NULL) {
+        free(*cabeca);
+        *cabeca = NULL;
+        return;
+    }
+    No* temp = *cabeca;
+    while (temp->proximo->proximo != NULL) {
+        temp = temp->proximo;
+    }
+    free(temp->proximo);
+    temp->proximo = NULL;
+}
+
+void buscarElemento(No* cabeca, int dado) {
+    No* temp = cabeca;
+    while (temp != NULL) {
+        if (temp->dado == dado) {
+            printf("Elemento %d encontrado.\n", dado);
+            return;
         }
-        aux->proximo = novo;
+        temp = temp->proximo;
     }
+    printf("Elemento %d não encontrado.\n", dado);
 }
 
-int removerFim(struct listaLigada **lista)
-{
-    if (*lista != NULL)
-    {
-        if ((*lista)->proximo == NULL)
-        {
-            free(*lista);
-            *lista = NULL;
-        }
-        else
-        {
-            struct listaLigada *aux = *lista;
-            while (aux->proximo->proximo != NULL)
-            {
-                aux = aux->proximo;
-            }
-            free(aux->proximo);
-            aux->proximo = NULL;
-        }
-    }
-}
+int main() {
+    No* cabeca = NULL;
+    int escolha, dado;
 
-int buscarElemento(struct listaLigada *lista, int elemento)
-{
-    struct listaLigada *aux = lista;
-    int i = 0;
-    while (aux != NULL)
-    {
-        if (i == elemento)
-        {
-            return 1;
+    do {
+        printf("MENU:\n");
+        printf("0 - SAIR\n");
+        printf("1 - LISTAR ELEMENTOS DA LISTA\n");
+        printf("2 - INSERIR NO INÍCIO\n");
+        printf("3 - INSERIR NO FIM\n");
+        printf("4 - REMOVER DO INÍCIO\n");
+        printf("5 - REMOVER DO FIM\n");
+        printf("6 - BUSCAR ELEMENTO\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &escolha);
+
+        switch (escolha) {
+            case 0:
+                printf("Saindo...\n");
+                break;
+            case 1:
+                listarElementos(cabeca);
+                break;
+            case 2:
+                printf("Digite o valor a ser inserido no início: ");
+                scanf("%d", &dado);
+                inserirNoInicio(&cabeca, dado);
+                break;
+            case 3:
+                printf("Digite o valor a ser inserido no fim: ");
+                scanf("%d", &dado);
+                inserirNoFim(&cabeca, dado);
+                break;
+            case 4:
+                removerDoInicio(&cabeca);
+                break;
+            case 5:
+                removerDoFim(&cabeca);
+                break;
+            case 6:
+                printf("Digite o valor a ser buscado: ");
+                scanf("%d", &dado);
+                buscarElemento(cabeca, dado);
+                break;
+            default:
+                printf("Opção inválida.\n");
         }
-        aux = aux->proximo;
-        i++;
-    }
+    } while (escolha != 0);
+
     return 0;
-}
-
-void main()
-{
-    struct listaLigada *lista = NULL;
-    int opcao;
-    int elemento;
-
-    do
-    {
-        printf("0 - Sair\n");
-        printf("1 - Listar\n");
-        printf("2 - Inserir no inicio\n");
-        printf("3 - Remover do inicio\n");
-        printf("4 - Inserir no fim\n");
-        printf("5 - Remover do fim\n");
-        printf("6 - Buscar elemento\n");
-        scanf("%d", &opcao);
-
-        switch (opcao)
-        {
-        case 1:
-            listar(&lista);
-            break;
-        case 2:
-            inserirInicio(&lista);
-            break;
-        case 3:
-            removerInicio(&lista);
-            break;
-        case 4:
-            inserirFim(&lista);
-            break;
-        case 5:
-            removerFim(&lista);
-            break;
-        case 6:
-            printf("Digite o elemento que deseja buscar: ");
-            scanf("%d", &elemento);
-            if (buscarElemento(lista, elemento))
-            {
-                printf("Elemento encontrado\n");
-            }
-            else
-            {
-                printf("Elemento nao encontrado\n");
-            }
-            break;
-        }
-    } while (opcao != 0);
 }
