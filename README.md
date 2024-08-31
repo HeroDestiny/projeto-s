@@ -6,6 +6,7 @@ Os algoritmos de ordenação são fundamentais para a organização de dados em 
 
 ## 2. Descrição da Implementação de Cada Algoritmo
 
+![Captura de tela 2024-08-31 150639](https://github.com/user-attachments/assets/1a69350f-f326-485a-990a-9211c4fbc6ae)
 - **Bubble Sort**:
   - Compara elementos adjacentes e os troca se estiverem fora de ordem.
   - Simples, mas ineficiente para grandes conjuntos de dados (O(n²)).
